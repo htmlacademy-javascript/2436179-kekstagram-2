@@ -45,3 +45,26 @@ getNumber('а я томат');
 getNumber(2023);
 getNumber(-1);
 getNumber(1.5);
+
+// 5.16. Функции возвращаются
+
+const transformHourToMinute = (time) => {
+  const [hours, minutes] = time.split(':');
+  return +hours * 60 + +minutes;
+};
+
+const getWorkTime = (startWorkDay, endWorkDay, meetingStart, meetingDuration) => {
+
+  const start = transformHourToMinute(startWorkDay);
+  const end = transformHourToMinute(endWorkDay);
+  const startMeeting = transformHourToMinute(meetingStart);
+  const endMeeting = startMeeting + meetingDuration;
+
+  return startMeeting >= start && endMeeting <= end;
+};
+
+(getWorkTime('08:00', '17:30', '14:00', 90));
+(getWorkTime('8:0', '10:0', '8:0', 120));
+(getWorkTime('08:00', '14:30', '14:00', 90));
+(getWorkTime('14:00', '17:30', '08:0', 90));
+(getWorkTime('8:00', '17:30', '08:00', 900));
