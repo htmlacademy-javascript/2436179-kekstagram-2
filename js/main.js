@@ -1,3 +1,3 @@
-import {createPhotoDescriptions} from './data.js';
+import './data.js';
+import './users-photos.js';
 
-console.log(createPhotoDescriptions());

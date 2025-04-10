@@ -37,6 +37,17 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+const DESCRIPTIONS = [
+  'Лето',
+  'Осень',
+  'Море',
+  'Деревня',
+  'Солнце',
+  'Лес',
+  'Поле',
+  'Город'
+];
+
 const generateRandomPhotoId = createRandomId(photoId.MIN, photoId.MAX);
 const generateRandomPhotoUrl = createRandomId(photoId.MIN, photoId.MAX);
 
@@ -50,7 +61,7 @@ const createComments = () => ({
 const createPhotoDescription = () => ({
   id: generateRandomPhotoId(),
   url: `photos/${ generateRandomPhotoUrl()}.jpg`,
-  description: 'Боль сама по себе является любовью, главной причиной, но она дает возможность развиваться в труде и боли. Чтобы достичь минимальной цели, кто-то должен приложить усилия, если он не хочет получить что-то в результате. Никто не должен упражняться, если он не получает от этого выгоды.',
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateRandomValue(photoLikes.MIN, photoLikes.MAX),
   comments: Array.from({length: generateRandomValue(photoComments.MIN, photoComments.MAX)}, createComments)
 });
