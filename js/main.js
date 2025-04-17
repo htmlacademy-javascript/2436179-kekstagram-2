@@ -1,3 +1,2 @@
-import './data.js';
-import './users-photos.js';
+import './gallery.js';
 
