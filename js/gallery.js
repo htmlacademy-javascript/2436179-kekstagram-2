@@ -1,5 +1,4 @@
 import {isEscapeKey} from './util.js';
-import {picturesContainer} from './miniature-photos.js';
 import {generateBigPhoto} from './full-photo.js';
 import { clearComments } from './render-comments.js';
 
@@ -13,11 +12,12 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const openBigPhoto = () => {
+const openBigPhoto = (photo) => {
   bigPhotoModal.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 
   document.querySelector('body').classList.add('modal-open');
+  generateBigPhoto(photo);
 };
 
 const closeBigPhoto = () => {
@@ -29,14 +29,6 @@ const closeBigPhoto = () => {
   document.querySelector('body').classList.remove('modal-open');
 };
 
-picturesContainer.addEventListener('click', (evt) => {
-  const currentPictureNode = evt.target.closest('.picture');
-
-  if (currentPictureNode) {
-    evt.preventDefault();
-    generateBigPhoto(currentPictureNode.dataset.pictureId);
-    openBigPhoto();
-  }
-});
-
 bigPhotoModalClose.addEventListener('click', closeBigPhoto);
+
+export {openBigPhoto};

@@ -1,5 +1,3 @@
-let comments = [];
-let currentCount = 0;
 const COUNT_STEP = 5;
 
 const bigPhotoModal = document.querySelector('.big-picture');
@@ -8,6 +6,30 @@ const socialCommentTemplate = socialCommentsContainer.querySelector('.social__co
 const socialCommentsCount = bigPhotoModal.querySelector('.social__comment-count');
 const socialCommentsLoader = bigPhotoModal.querySelector('.social__comments-loader');
 
+let comments = [];
+let currentCount = 0;
+
+const createComment = ({avatar, name, message}) => {
+  const commentElement = socialCommentTemplate.cloneNode(true);
+
+  commentElement.querySelector('.social__picture').src = avatar;
+  commentElement.querySelector('.social__picture').alt = name;
+  commentElement.querySelector('.social__text').textContent = message;
+
+  return commentElement;
+};
+
+const generateCommentCount = (shownCount, totalCount) => {
+  socialCommentsCount.querySelector('.social__comment-shown-count').textContent = shownCount;
+  socialCommentsCount.querySelector('.social__comment-total-count').textContent = totalCount;
+};
+
+const createCommentsLoader = (shownCount, totalCount) => {
+  if (shownCount >= totalCount) {
+    socialCommentsLoader.classList.add('hidden');
+  }
+};
+
 const generateNextComments = () => {
   const socialCommentsFragment = document.createDocumentFragment();
 
@@ -15,22 +37,14 @@ const generateNextComments = () => {
   const renderCommentsLength = renderComments.length + currentCount;
 
   renderComments.forEach((comment) => {
-    const commentElement = socialCommentTemplate.cloneNode(true);
-
-    commentElement.querySelector('.social__picture').src = comment.avatar;
-    commentElement.querySelector('.social__picture').alt = comment.name;
-    commentElement.querySelector('.social__text').textContent = comment.message;
-    socialCommentsFragment.append(commentElement);
+    socialCommentsFragment.append(createComment(comment));
   });
 
   socialCommentsContainer.append(socialCommentsFragment);
 
-  socialCommentsCount.querySelector('.social__comment-shown-count').textContent = renderCommentsLength;
-  socialCommentsCount.querySelector('.social__comment-total-count').textContent = comments.length;
+  generateCommentCount(renderCommentsLength, comments.length);
 
-  if (renderCommentsLength >= comments.length) {
-    socialCommentsLoader.classList.add('hidden');
-  }
+  createCommentsLoader(renderCommentsLength, comments.length);
 
   currentCount += COUNT_STEP;
 };
