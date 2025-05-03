@@ -1,3 +1,15 @@
+let errorMessage = '';
+
+const setError = (message) => {
+  errorMessage = message;
+};
+
+const getError = () => errorMessage;
+
+const clearError = () => {
+  errorMessage = '';
+};
+
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -26,4 +38,4 @@ const generateRandomValue = (min, max) => createRandomId(min, max) ();
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {createRandomId, getRandomArrayElement, generateRandomValue, isEscapeKey};
+export {createRandomId, getRandomArrayElement, generateRandomValue, isEscapeKey, setError, getError, clearError};
