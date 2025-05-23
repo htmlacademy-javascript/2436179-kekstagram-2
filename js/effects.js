@@ -103,4 +103,9 @@ const onEffectChange = (evt) => {
   }
 };
 
-export {onEffectChange};
+const clearEffects = () => {
+  imgPreview.style.filter = 'none';
+  slider.classList.add('hidden');
+};
+
+export {onEffectChange, clearEffects};
