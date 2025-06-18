@@ -1,24 +1,18 @@
-import {isEscapeKey, getError} from './util.js';
-import {isHashtagValid} from './hashtag-valid.js';
-import {isDescriptionValid} from './description-valid.js';
-import {onSmallerClick, onBiggerClick, returnDefaultScale} from './scale.js';
-import {onEffectChange, clearEffects} from './effects.js';
+import {isEscapeKey} from './util.js';
+import {returnDefaultScale} from './scale.js';
+import {clearEffects} from './effects.js';
+import { isValid, resetValidation } from './validation.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
+import {SubmitButtonText} from './constants.js';
 
 const form = document.querySelector('.img-upload__form');
+const hashtagsInput = form.querySelector('.text__hashtags');
+const descriptionInput = form.querySelector('.text__description');
 const uploadInput = form.querySelector('.img-upload__input');
 const imgEditForm = form.querySelector('.img-upload__overlay');
 const imgEditFormCloseButton = form.querySelector('.img-upload__cancel');
-const hashtagsInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
-const scaleControlSmallerButton = form.querySelector('.scale__control--smaller');
-const scaleControlBiggerButton = form.querySelector('.scale__control--bigger');
-const effects = form.querySelector('.img-upload__effects');
-
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper'
-});
+const imgEditFormSubmitButton = form.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -31,36 +25,65 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const showForm = (isShown = true) => {
+  if (isShown) {
+    imgEditForm.classList.remove('hidden');
+    document.querySelector('body').classList.add('modal-open');
+  } else {
+    imgEditForm.classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
+  }
+};
+
 const openImgEditForm = () => {
-  imgEditForm.classList.remove('hidden');
+  showForm();
   document.addEventListener('keydown', onDocumentKeydown);
-  document.querySelector('body').classList.add('modal-open');
 };
 
 const closeImgEditForm = () => {
-  uploadInput.value = '';
+  form.reset();
+  resetValidation();
   returnDefaultScale();
   clearEffects();
-
-  imgEditForm.classList.add('hidden');
+  showForm(false);
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.querySelector('body').classList.remove('modal-open');
+
 };
 
-scaleControlSmallerButton.addEventListener('click', onSmallerClick);
-scaleControlBiggerButton.addEventListener('click', onBiggerClick);
+imgEditFormCloseButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  closeImgEditForm();
+});
 
-effects.addEventListener('change', onEffectChange);
-
-pristine.addValidator(hashtagsInput, isHashtagValid, getError);
-pristine.addValidator(descriptionInput, isDescriptionValid, getError);
-
-imgEditFormCloseButton.addEventListener('click', closeImgEditForm);
 uploadInput.addEventListener('change', openImgEditForm);
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    form.submit();
-  }
-});
+const blockSubmitButton = () => {
+  imgEditFormSubmitButton.disabled = true;
+  imgEditFormSubmitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unBlockSubmitButton = () => {
+  imgEditFormSubmitButton.disabled = false;
+  imgEditFormSubmitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (isValid()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unBlockSubmitButton);
+    }
+  });
+};
+
+export {setFormSubmit, closeImgEditForm};

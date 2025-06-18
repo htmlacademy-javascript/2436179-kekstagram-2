@@ -1,59 +1,14 @@
+import {PhotoId, PhotoLikes, PhotoComments, AvatarId, NAMES, MESSAGES, DESCRIPTIONS, TOTAL_PHOTO_DESCRIPTION} from './constants.js';
 import {createRandomId, getRandomArrayElement, generateRandomValue} from './util.js';
 
-const TOTAL_PHOTO_DESCRIPTION = 25;
-const photoId = {
-  MIN: 1,
-  MAX: 25
-};
-const photoLikes = {
-  MIN: 15,
-  MAX: 200
-};
-const photoComments = {
-  MIN: 0,
-  MAX: 30
-};
-const avatarId = {
-  MIN: 1,
-  MAX: 6
-};
 let commentId = 1;
 
-const NAMES = [
-  'Максим',
-  'Том',
-  'Алекс',
-  'Катя',
-  'Арина',
-  'Артем'
-];
-
-const MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
-
-const DESCRIPTIONS = [
-  'Лето',
-  'Осень',
-  'Море',
-  'Деревня',
-  'Солнце',
-  'Лес',
-  'Поле',
-  'Город'
-];
-
-const generateRandomPhotoId = createRandomId(photoId.MIN, photoId.MAX);
-const generateRandomPhotoUrl = createRandomId(photoId.MIN, photoId.MAX);
+const generateRandomPhotoId = createRandomId(PhotoId.MIN, PhotoId.MAX);
+const generateRandomPhotoUrl = createRandomId(PhotoId.MIN, PhotoId.MAX);
 
 const createComments = () => ({
   id: commentId++,
-  avatar: `img/avatar-${ generateRandomValue(avatarId.MIN, avatarId.MAX)}.svg`,
+  avatar: `img/avatar-${ generateRandomValue(AvatarId.MIN, AvatarId.MAX)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES)
 });
@@ -62,8 +17,8 @@ const createPhotoDescription = () => ({
   id: generateRandomPhotoId(),
   url: `photos/${ generateRandomPhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: generateRandomValue(photoLikes.MIN, photoLikes.MAX),
-  comments: Array.from({length: generateRandomValue(photoComments.MIN, photoComments.MAX)}, createComments)
+  likes: generateRandomValue(PhotoLikes.MIN, PhotoLikes.MAX),
+  comments: Array.from({length: generateRandomValue(PhotoComments.MIN, PhotoComments.MAX)}, createComments)
 });
 
 const createPhotoDescriptions = () => Array.from({length: TOTAL_PHOTO_DESCRIPTION}, createPhotoDescription);

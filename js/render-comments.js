@@ -1,4 +1,4 @@
-const COUNT_STEP = 5;
+import {COUNT_STEP} from './constants';
 
 const bigPhotoModal = document.querySelector('.big-picture');
 const socialCommentsContainer = bigPhotoModal.querySelector('.social__comments');

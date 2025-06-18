@@ -1,6 +1,17 @@
-import {createPhotoDescriptions} from './data.js';
-import { renderCard } from './miniature-photos.js';
 import './form.js';
+import { getData } from './api.js';
+import { renderCard } from './miniature-photos.js';
+import {showDataErrorMessage} from './messages.js';
+import {setFormSubmit, closeImgEditForm} from './form.js';
 
-const photos = createPhotoDescriptions();
-renderCard(photos);
+getData()
+  .then(((photos) => {
+    renderCard(photos);
+  }))
+  .catch(() => {
+    showDataErrorMessage();
+  });
+
+setFormSubmit(closeImgEditForm);
+
+
