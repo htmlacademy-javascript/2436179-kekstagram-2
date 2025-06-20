@@ -1,6 +1,5 @@
+import {MAX_HASHTAGS_AMOUNT} from './constants.js';
 import {setError, getError, clearError} from './util.js';
-
-const MAX_HASHTAGS_AMOUNT = 5;
 
 const hashtagsRegexValidation = (item, regex, message) => {
   if (!regex.test(item)) {

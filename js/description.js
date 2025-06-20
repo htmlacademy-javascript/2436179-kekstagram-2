@@ -1,6 +1,5 @@
+import {MAX_DESCRIPTION_LENGTH} from './constants.js';
 import {setError, getError, clearError} from './util.js';
-
-const MAX_DESCRIPTION_LENGTH = 140;
 
 const isDescriptionValid = (value) => {
   clearError();
