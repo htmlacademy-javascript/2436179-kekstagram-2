@@ -21,6 +21,8 @@ export const MAX_SCALE = 100;
 
 export const COUNT_STEP = 5;
 
+export const RANDOM_PHOTO_AMOUNT = 10;
+
 export const Effect = {
   NONE: 'none',
   CHROME: 'chrome',
@@ -104,4 +106,12 @@ export const EffectsSettings = {
     style: 'brightness',
     units: ''
   }
+};
+
+export const ACTIVE_BUTTON = 'img-filters__button--active';
+
+export const Filters = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
 };
