@@ -9,7 +9,7 @@ const renderCard = (photos) => {
   pictures = [...photos];
   const userPicturesFragment = document.createDocumentFragment();
 
-  photos.forEach(({id, url, description, likes, comments}) => {
+  pictures.forEach(({id, url, description, likes, comments}) => {
     const pictureElement = userPicturesTemplate.cloneNode(true);
 
     pictureElement.dataset.pictureId = id;
@@ -36,7 +36,11 @@ picturesContainer.addEventListener('click', (evt) => {
   }
 });
 
+const clearCards = () => {
+  const oldCards = picturesContainer.querySelectorAll('.picture');
+  oldCards.forEach((card) => card.remove());
+};
 
-export {renderCard};
+export {renderCard, clearCards};
 
 

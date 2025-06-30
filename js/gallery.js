@@ -20,14 +20,14 @@ const openBigPhoto = (photo) => {
   generateBigPhoto(photo);
 };
 
-const closeBigPhoto = () => {
+function closeBigPhoto () {
   clearComments();
 
   bigPhotoModal.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
 
   document.querySelector('body').classList.remove('modal-open');
-};
+}
 
 bigPhotoModalClose.addEventListener('click', closeBigPhoto);
 

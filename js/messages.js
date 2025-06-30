@@ -23,12 +23,12 @@ const onDocumentClick = () => {
   });
 };
 
-const hiddenMassage = () => {
+function hiddenMassage () {
   if (messageElement) {
     messageElement.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
   }
-};
+}
 
 const createMessage = (template, closeSelector = null) => {
   messageElement = template.cloneNode(true);

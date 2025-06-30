@@ -40,15 +40,18 @@ const openImgEditForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeImgEditForm = () => {
+function closeImgEditForm () {
+  if (document.querySelector('.error')) {
+    return;
+  }
+
   form.reset();
   resetValidation();
   returnDefaultScale();
   clearEffects();
   showForm(false);
   document.removeEventListener('keydown', onDocumentKeydown);
-
-};
+}
 
 imgEditFormCloseButton.addEventListener('click', (evt) => {
   evt.preventDefault();
