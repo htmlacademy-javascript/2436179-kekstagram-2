@@ -4,7 +4,7 @@ import {clearEffects} from './effects.js';
 import { isValid, resetValidation } from './validation.js';
 import {sendData} from './api.js';
 import {showSuccessMessage, showErrorMessage} from './messages.js';
-import {SubmitButtonText} from './constants.js';
+import {SubmitButtonText, FILE_TYPES} from './constants.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
@@ -13,6 +13,8 @@ const uploadInput = form.querySelector('.img-upload__input');
 const imgEditForm = form.querySelector('.img-upload__overlay');
 const imgEditFormCloseButton = form.querySelector('.img-upload__cancel');
 const imgEditFormSubmitButton = form.querySelector('.img-upload__submit');
+const photoPreview = form.querySelector('.img-upload__preview img');
+const effectPreviews = document.querySelectorAll('.effects__preview');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -40,6 +42,21 @@ const openImgEditForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const uploadFile = () => {
+  const file = uploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+  if (matches) {
+    const imageURL = URL.createObjectURL(file);
+    photoPreview.src = imageURL;
+
+    effectPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${imageURL})`;
+    });
+  }
+};
+
 function closeImgEditForm () {
   if (document.querySelector('.error')) {
     return;
@@ -58,7 +75,10 @@ imgEditFormCloseButton.addEventListener('click', (evt) => {
   closeImgEditForm();
 });
 
-uploadInput.addEventListener('change', openImgEditForm);
+uploadInput.addEventListener('change', () => {
+  openImgEditForm();
+  uploadFile();
+});
 
 const blockSubmitButton = () => {
   imgEditFormSubmitButton.disabled = true;
