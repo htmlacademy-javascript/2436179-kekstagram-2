@@ -3,38 +3,37 @@ import { getRandomElement, sortByComments, debounce } from './util.js';
 import { ACTIVE_BUTTON, Filters, RANDOM_PHOTO_AMOUNT } from './constants.js';
 
 const filterContainer = document.querySelector('.img-filters');
-const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
 
 let filteredPhotos = [];
 let currentFilter;
 
+const filtersSettings = {
+  [Filters.DEFAULT]: () => filteredPhotos,
+  [Filters.RANDOM]: () => getRandomElement(filteredPhotos, RANDOM_PHOTO_AMOUNT),
+  [Filters.DISCUSSED]: () => sortByComments(filteredPhotos)
+};
+
 const updatePhotos = () => {
   clearCards();
 
-  switch (currentFilter.id) {
-    case Filters.RANDOM:
-      renderCard(getRandomElement(filteredPhotos, RANDOM_PHOTO_AMOUNT));
-      break;
-    case Filters.DISCUSSED:
-      renderCard(sortByComments(filteredPhotos));
-      break;
-    default:
-      renderCard(filteredPhotos);
-  }
+  const getPhotos = filtersSettings[currentFilter.id] || filtersSettings[Filters.DEFAULT];
+  renderCard(getPhotos());
 };
 
 const debouncedUpdatePhotos = debounce(updatePhotos);
 
 const onFilterChange = (evt) => {
+  const filterActiveButton = filterContainer.querySelector(`.${ACTIVE_BUTTON}`);
+
   currentFilter = evt.target;
 
   if (!currentFilter.classList.contains('img-filters__button')) {
     return;
   }
 
-  filterButtons.forEach((button) =>
-    button.classList.remove(ACTIVE_BUTTON)
-  );
+  if (filterActiveButton) {
+    filterActiveButton.classList.remove(ACTIVE_BUTTON);
+  }
 
   currentFilter.classList.add(ACTIVE_BUTTON);
 

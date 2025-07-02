@@ -115,3 +115,5 @@ export const Filters = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed'
 };
+
+export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
