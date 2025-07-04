@@ -32,6 +32,20 @@ export const Effect = {
   HEAT: 'heat'
 };
 
+export const FormatSettings = {
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
+};
+
 export const EffectsSettings = {
   [Effect.NONE]: {
     slider: {
@@ -44,7 +58,8 @@ export const EffectsSettings = {
       connect: 'lower',
     },
     style: '',
-    units: ''
+    units: '',
+    format: FormatSettings.format
   },
   [Effect.CHROME]: {
     slider: {
@@ -56,7 +71,8 @@ export const EffectsSettings = {
       step: 0.1,
     },
     style: 'grayscale',
-    units: ''
+    units: '',
+    format: FormatSettings.format
   },
   [Effect.SEPIA]: {
     slider: {
@@ -68,7 +84,8 @@ export const EffectsSettings = {
       step: 0.1,
     },
     style: 'sepia',
-    units: ''
+    units: '',
+    format: FormatSettings.format
   },
   [Effect.MARVIN]: {
     slider: {
@@ -80,7 +97,8 @@ export const EffectsSettings = {
       step: 1,
     },
     style: 'invert',
-    units: '%'
+    units: '%',
+    format: FormatSettings.format
   },
   [Effect.PHOBOS]: {
     slider: {
@@ -92,7 +110,8 @@ export const EffectsSettings = {
       step: 0.1,
     },
     style: 'blur',
-    units: 'px'
+    units: 'px',
+    format: FormatSettings.format
   },
   [Effect.HEAT]: {
     slider: {
@@ -104,7 +123,8 @@ export const EffectsSettings = {
       step: 0.1,
     },
     style: 'brightness',
-    units: ''
+    units: '',
+    format: FormatSettings.format
   }
 };
 
