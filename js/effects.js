@@ -11,7 +11,8 @@ let currentEffect = Effect.NONE;
 slider.classList.add('hidden');
 
 noUiSlider.create(sliderElement, {
-  ...EffectsSettings[Effect.NONE].slider
+  ...EffectsSettings[Effect.NONE].slider,
+  format: EffectsSettings[Effect.NONE].format
 });
 
 sliderElement.noUiSlider.on('update', ()=> {
@@ -32,7 +33,8 @@ const onEffectChange = (evt) => {
   slider.classList.toggle('hidden', currentEffect === Effect.NONE);
 
   sliderElement.noUiSlider.updateOptions({
-    ...EffectsSettings[currentEffect].slider
+    ...EffectsSettings[currentEffect].slider,
+    format: EffectsSettings[Effect.NONE].format
   });
 };
 

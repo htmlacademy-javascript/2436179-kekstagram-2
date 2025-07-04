@@ -5,7 +5,7 @@ import { ACTIVE_BUTTON, Filters, RANDOM_PHOTO_AMOUNT } from './constants.js';
 const filterContainer = document.querySelector('.img-filters');
 
 let filteredPhotos = [];
-let currentFilter;
+let currentFilter = Filters.DEFAULT;
 
 const filtersSettings = {
   [Filters.DEFAULT]: () => filteredPhotos,
@@ -41,10 +41,9 @@ const onFilterChange = (evt) => {
 };
 
 const showFilters = (photos) => {
-  filteredPhotos = [...photos];
   filterContainer.classList.remove('img-filters--inactive');
+  filterContainer.addEventListener('click', onFilterChange);
+  filteredPhotos = [...photos];
 };
-
-filterContainer.addEventListener('click', onFilterChange);
 
 export { showFilters };
