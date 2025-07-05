@@ -9,8 +9,8 @@ const getError = () => errorMessage;
 const clearError = () => {
   errorMessage = '';
 };
-const getRandomElement = (array, count) => {
-  const result = [...array].sort(() => Math.random() - 0.5);
+const getRandomElement = (elements, count) => {
+  const result = [...elements].sort(() => Math.random() - 0.5);
   return result.slice(0, count);
 };
 
