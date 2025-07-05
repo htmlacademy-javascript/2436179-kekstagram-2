@@ -8,7 +8,7 @@ const bigPhotoModalClose = document.querySelector('.big-picture__cancel');
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeBigPhoto();
+    onBigPhotoCloseClick();
   }
 };
 
@@ -20,7 +20,7 @@ const openBigPhoto = (photo) => {
   generateBigPhoto(photo);
 };
 
-function closeBigPhoto () {
+function onBigPhotoCloseClick () {
   clearComments();
 
   bigPhotoModal.classList.add('hidden');
@@ -29,6 +29,6 @@ function closeBigPhoto () {
   document.querySelector('body').classList.remove('modal-open');
 }
 
-bigPhotoModalClose.addEventListener('click', closeBigPhoto);
+bigPhotoModalClose.addEventListener('click', onBigPhotoCloseClick);
 
 export {openBigPhoto};

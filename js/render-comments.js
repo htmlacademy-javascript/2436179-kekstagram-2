@@ -30,7 +30,7 @@ const createCommentsLoader = (shownCount, totalCount) => {
   }
 };
 
-const generateNextComments = () => {
+const onSocialCommentsLoaderClick = () => {
   const socialCommentsFragment = document.createDocumentFragment();
 
   const renderComments = comments.slice(currentCount, currentCount + COUNT_STEP);
@@ -54,16 +54,16 @@ const clearComments = () => {
 
   currentCount = 0;
   socialCommentsLoader.classList.remove('hidden');
-  socialCommentsLoader.removeEventListener('click', generateNextComments);
+  socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
 };
 
 const generateComments = (currentPhotoComments) => {
   socialCommentsContainer.innerHTML = '';
 
   comments = currentPhotoComments;
-  generateNextComments();
+  onSocialCommentsLoaderClick();
 
-  socialCommentsLoader.addEventListener('click', generateNextComments);
+  socialCommentsLoader.addEventListener('click', onSocialCommentsLoaderClick);
 };
 
 export {clearComments, generateComments};

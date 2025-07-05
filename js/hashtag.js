@@ -1,7 +1,7 @@
 import {MAX_HASHTAGS_AMOUNT} from './constants.js';
 import {setError, getError, clearError} from './util.js';
 
-const hashtagsRegexValidation = (item, regex, message) => {
+const validateHashtagsRegex = (item, regex, message) => {
   if (!regex.test(item)) {
     setError(message);
     return false;
@@ -9,7 +9,7 @@ const hashtagsRegexValidation = (item, regex, message) => {
   return true;
 };
 
-const minHashtagLength = (item) => {
+const checkMinHashtagLength = (item) => {
   if (item.length <= 1) {
     setError('хештег не может состоять только из одной решётки');
     return false;
@@ -44,10 +44,10 @@ const isHashtagValid = (value) => {
   }
 
   return hashtagsArray.every((item) =>
-    hashtagsRegexValidation(item, /^#/, 'хэштег должен начинаться с символа # (решётка)') &&
-    minHashtagLength(item) &&
-    hashtagsRegexValidation(item, /^#[a-zа-я0-9]+$/i, 'хэштег содержит недопустимые символы') &&
-    hashtagsRegexValidation(item, /^#[a-zа-я0-9]{1,19}$/i, 'максимальная длина одного хэштега 20 символов, включая решётку')
+    validateHashtagsRegex(item, /^#/, 'хэштег должен начинаться с символа # (решётка)') &&
+    checkMinHashtagLength(item) &&
+    validateHashtagsRegex(item, /^#[a-zа-я0-9]+$/i, 'хэштег содержит недопустимые символы') &&
+    validateHashtagsRegex(item, /^#[a-zа-я0-9]{1,19}$/i, 'максимальная длина одного хэштега 20 символов, включая решётку')
   );
 };
 

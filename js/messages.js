@@ -11,19 +11,19 @@ let messageElement;
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hiddenMassage();
+    onCloseButtonClick();
   }
 };
 
 const onDocumentClick = () => {
   messageElement.addEventListener('click', (evt) => {
     if (evt.target === messageElement) {
-      hiddenMassage();
+      onCloseButtonClick();
     }
   });
 };
 
-function hiddenMassage () {
+function onCloseButtonClick () {
   if (messageElement) {
     messageElement.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
@@ -35,7 +35,7 @@ const createMessage = (template, closeSelector = null) => {
 
   if (closeSelector) {
     const closeButton = messageElement.querySelector(closeSelector);
-    closeButton.addEventListener('click', hiddenMassage);
+    closeButton.addEventListener('click', onCloseButtonClick);
   }
 
   messageContainer.append(messageElement);
@@ -57,7 +57,7 @@ const showDataErrorMessage = () => {
   createMessage(dataErrorMessageTemplate);
 
   setTimeout(() => {
-    hiddenMassage();
+    onCloseButtonClick();
   }, ALERT_SHOW_TIME);
 };
 
